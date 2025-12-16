@@ -1,0 +1,68 @@
+# ------------------------------------------------------------------------
+# Underwind .gitignore
+# WordPress + Tailwind CSS + Vite
+# ------------------------------------------------------------------------
+
+# -------------------------
+# OS / Editor junk
+# -------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.bak
+*.tmp
+*.log
+*.orig
+*.rej
+
+.idea/
+.vscode/
+*.code-workspace
+
+# -------------------------
+# Dependencies
+# -------------------------
+node_modules/
+vendor/
+
+# -------------------------
+# Build output
+# -------------------------
+/dist/
+/build/
+
+# Vite cache
+.vite/
+
+# -------------------------
+# Environment files
+# -------------------------
+.env
+.env.*
+!.env.example
+
+# -------------------------
+# WordPress-specific
+# -------------------------
+wp-config.php
+
+# -------------------------
+# Package managers
+# -------------------------
+# Keep lockfiles for reproducible builds
+# (comment these out if you prefer flexibility)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# -------------------------
+# Archives
+# -------------------------
+*.zip
+*.tar.gz
+
+# -------------------------
+# Composer
+# -------------------------
+/composer.phar
