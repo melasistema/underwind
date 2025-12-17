@@ -25,6 +25,18 @@
             "Underwind\\": "app/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
-}
+            "minimum-stability": "dev",
+            "prefer-stable": true,
+            "scripts": {
+                "post-install-cmd": [
+                    "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+                ],
+                "post-update-cmd": [
+                    "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+                ]
+            },
+            "require-dev": {
+                "squizlabs/php_codesniffer": "^3.9",
+                "wp-coding-standards/wpcs": "^2.3"
+            }
+    }

@@ -69,6 +69,34 @@ The `build` script utilizes `cpy-cli` to prepare the theme for release. While ef
 
 ---
 
+## 🧹 Code Quality & Standards
+
+To ensure code consistency, reduce errors, and streamline development, Underwind integrates several tools for linting and formatting.
+
+| Command            | Description                                                                                                                                              |
+| :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run lint:js`  | Checks JavaScript and TypeScript files for errors and style violations using ESLint.                                                                     |
+| `npm run format:js`| Automatically formats JavaScript, TypeScript, CSS, and JSON files using Prettier, adhering to the project's defined style.                               |
+| `npm run lint:php` | Checks PHP files for coding standard violations using PHP_CodeSniffer, based on the `phpcs.xml.dist` configuration (WordPress and Theme Review standards). |
+| `npm run format:php` | Automatically fixes many common PHP coding standard violations using `phpcbf`.                                                                           |
+
+---
+
+## 🚀 Deployment
+
+After running `npm run build`, a production-ready version of your theme will be generated in the `release/underwind` directory. This folder contains all the necessary files for your WordPress theme, optimized for deployment.
+
+To deploy your theme to a live WordPress environment:
+
+1.  **Access Your Server:** Connect to your web server using FTP/SFTP or SSH.
+2.  **Navigate to Themes Directory:** Go to your WordPress installation's `wp-content/themes/` directory.
+3.  **Upload the Release:** Upload the entire `release/underwind` folder (rename it to your desired theme folder name, e.g., `your-theme-name`) into the `wp-content/themes/` directory on your server.
+4.  **Activate Theme:** Log in to your WordPress admin dashboard, navigate to "Appearance > Themes", and activate your newly uploaded theme.
+
+For more advanced deployment workflows (e.g., Git-based deployment, CI/CD pipelines), you would typically configure your system to automatically transfer the contents of the `release/underwind` folder to your production server upon a successful build or commit.
+
+---
+
 ## 📜 License
 
 Underwind is licensed under the [**GPLv2 or later**.](LICENSE)

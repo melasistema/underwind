@@ -1,0 +1,25 @@
+# Ignore artifacts:
+dist
+release
+vendor
+composer.lock
+package-lock.json
+
+# Ignore build tooling:
+node_modules
+
+# Ignore configs and dotfiles:
+.git
+.idea
+.vscode
+.DS_Store
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.eslintcache
+.stylelintcache
+
+# Ignore various files in development:
+**/*.min.*
