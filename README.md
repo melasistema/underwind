@@ -19,7 +19,7 @@ Here’s what makes Underwind the ultimate modern starter:
 *   **🛠️ Optimized Templating:**
     *   Custom template tags in `inc/template-tags.php` to keep templates clean and prevent code duplication.
     *   Small functional tweaks in `inc/template-functions.php` to enhance your theming experience.
-*   **🧩 Interactive Components:** The `src/js/app.js` entry point is ready with Alpine.js, now also integrating `navigation.js` and `customizer.js` for enhanced functionality. It provides an example toggled menu for small screens—ready for your custom styling and expansion.
+*   **🧩 Interactive Components:** The `src/js/app.js` entry point is ready with Alpine.js, which defines the `menu()` data component for interactive elements. It provides an example toggled menu for small screens—ready for your custom styling and expansion.
 *   **🛒 WooCommerce Ready:** Full support for WooCommerce integration via hooks in `inc/woocommerce.php`. WooCommerce styles are now integrated into the main CSS build via Vite, along with modern features like product gallery zoom, swipe, and lightbox enabled.
 
 ---
