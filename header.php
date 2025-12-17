@@ -28,56 +28,62 @@
 
     <!-- Header -->
     <header id="masthead" class="bg-gray-100 shadow-md">
-        <div class="container mx-auto flex items-center justify-between p-4">
+        <div
+                x-data="menu()"
+                class="container mx-auto p-4"
+        >
+            <div class="flex items-center justify-between">
 
-            <!-- Site branding -->
-            <div class="site-branding flex items-center space-x-4">
-                <?php the_custom_logo(); ?>
+                <!-- Site branding -->
+                <div class="site-branding flex items-center space-x-4">
+                    <?php the_custom_logo(); ?>
 
-                <div>
-                    <?php if ( is_front_page() && is_home() ) : ?>
-                        <h1 class="site-title text-2xl font-bold text-gray-800">
-                            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-                                <?php bloginfo( 'name' ); ?>
-                            </a>
-                        </h1>
-                    <?php else : ?>
-                        <p class="site-title text-xl font-semibold text-gray-800">
-                            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-                                <?php bloginfo( 'name' ); ?>
-                            </a>
-                        </p>
-                    <?php endif; ?>
-
-                    <?php $underwind_description = get_bloginfo( 'description', 'display' );
-                    if ( $underwind_description || is_customize_preview() ) : ?>
-                        <p class="site-description text-gray-600 text-sm"><?php echo $underwind_description; ?></p>
-                    <?php endif; ?>
+                    <div>
+                        <?php if ( is_front_page() && is_home() ) : ?>
+                            <h1 class="text-2xl font-bold">
+                                <a href="<?php echo esc_url( home_url('/') ); ?>">
+                                    <?php bloginfo('name'); ?>
+                                </a>
+                            </h1>
+                        <?php else : ?>
+                            <p class="text-xl font-semibold">
+                                <a href="<?php echo esc_url( home_url('/') ); ?>">
+                                    <?php bloginfo('name'); ?>
+                                </a>
+                            </p>
+                        <?php endif; ?>
+                    </div>
                 </div>
+
+                <!-- Mobile toggle -->
+                <button
+                        @click="toggle"
+                        class="md:hidden p-2 rounded bg-gray-200"
+                        aria-label="Toggle menu"
+                >
+                    <span x-show="!open">☰</span>
+                    <span x-show="open" x-cloak>✕</span>
+                </button>
+
+                <!-- Desktop menu -->
+                <nav class="hidden md:flex space-x-6">
+                    <?php
+                    wp_nav_menu([
+                            'theme_location' => 'primary',
+                            'menu_class'     => 'flex space-x-6',
+                            'container'      => false,
+                    ]);
+                    ?>
+                </nav>
             </div>
 
-            <!-- Mobile menu toggle (Alpine) -->
-            <button x-data="menu()" @click="toggle()" class="md:hidden p-2 rounded-md bg-gray-200" aria-label="Toggle menu">
-                <span x-show="!open">☰</span>
-                <span x-show="open">✕</span>
-            </button>
-
-            <!-- Navigation -->
-            <nav class="hidden md:flex space-x-6 items-center">
-                <?php
-                wp_nav_menu([
-                        'theme_location' => 'primary',
-                        'menu_class'     => 'flex space-x-6',
-                        'container'      => false,
-                ]);
-                ?>
-            </nav>
-
-        </div>
-
-        <!-- Mobile navigation -->
-        <nav x-show="open" x-transition class="md:hidden bg-gray-100 border-t border-gray-200">
-            <div class="p-4 space-y-2">
+            <!-- Mobile menu -->
+            <nav
+                    x-show="open"
+                    x-transition
+                    x-cloak
+                    class="md:hidden mt-4 border-t pt-4"
+            >
                 <?php
                 wp_nav_menu([
                         'theme_location' => 'primary',
@@ -85,8 +91,8 @@
                         'container'      => false,
                 ]);
                 ?>
-            </div>
-        </nav>
+            </nav>
+        </div>
     </header>
 
     <main id="primary" class="flex-1">
