@@ -64,6 +64,6 @@ Underwind is configured with convenient command-line interface (CLI) commands, p
 
 ## 📜 License
 
-Underwind is licensed under the **GPLv2 or later**. [License](LICENSE)
+Underwind is licensed under the [**GPLv2 or later**.](LICENSE)
 
 Go forth and make something cool! 🙂
