@@ -82,6 +82,18 @@ To ensure code consistency, reduce errors, and streamline development, Underwind
 
 ---
 
+## 🧪 Testing
+
+Implementing a comprehensive testing strategy is crucial for maintaining code quality, preventing regressions, and ensuring the reliability of your theme as it evolves. While not strictly enforced out-of-the-box, consider integrating the following types of tests:
+
+*   **PHP Unit Testing:** For backend PHP logic (e.g., custom functions, classes, and WordPress hooks), PHPUnit is the standard. This helps verify that individual components of your PHP code work as expected.
+*   **JavaScript Unit/Integration Testing:** For frontend JavaScript logic (especially Alpine.js components or any complex interactions), tools like Jest or Vitest can be used. This ensures your JavaScript code functions correctly in isolation and when integrated with other small units.
+*   **End-to-End (E2E) Testing:** For verifying critical user flows and theme functionality in a browser environment, E2E testing frameworks like Cypress or Playwright are invaluable. These tests simulate real user interactions and ensure the theme behaves correctly across different pages and scenarios.
+
+Integrating testing frameworks involves setting up test runners, writing test cases, and potentially adding new `npm` scripts for running tests. These are advanced steps that can significantly enhance the robustness of your theme.
+
+---
+
 ## 🚀 Deployment
 
 After running `npm run build`, a production-ready version of your theme will be generated in the `release/underwind` directory. This folder contains all the necessary files for your WordPress theme, optimized for deployment.
@@ -94,6 +106,19 @@ To deploy your theme to a live WordPress environment:
 4.  **Activate Theme:** Log in to your WordPress admin dashboard, navigate to "Appearance > Themes", and activate your newly uploaded theme.
 
 For more advanced deployment workflows (e.g., Git-based deployment, CI/CD pipelines), you would typically configure your system to automatically transfer the contents of the `release/underwind` folder to your production server upon a successful build or commit.
+
+---
+
+## ⚡️ Performance Optimization
+
+Ensuring your theme performs optimally is key for a great user experience. Beyond the initial setup with Vite and Tailwind CSS, consider these areas for further performance enhancements:
+
+*   **Image Optimization:** Images often contribute significantly to page load times. Implement strategies such as:
+    *   **Responsive Images:** Use `srcset` and `sizes` attributes to serve appropriately sized images based on the user's device.
+    *   **Lazy Loading:** Defer loading of offscreen images until they are needed, using native browser lazy loading (`loading="lazy"`) or JavaScript libraries.
+    *   **Modern Formats:** Convert images to modern, more efficient formats like WebP or AVIF, which offer better compression with little to no loss in quality.
+    *   **Compression:** Optimize images without visually perceptible quality loss using tools or services.
+*   **Critical CSS Generation:** For optimal perceived performance, consider generating and inlining "Critical CSS" for the above-the-fold content of your pages. This ensures that the essential styling loads as quickly as possible, providing a fast initial render. Tools can analyze your page and extract the necessary CSS.
 
 ---
 
