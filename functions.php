@@ -5,6 +5,8 @@
  * @package Underwind
  */
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 defined( 'ABSPATH' ) || exit;
 
 /* ------------------------------------------------------------

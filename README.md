@@ -32,7 +32,7 @@ To run Underwind, ensure you have the following installed on your development en
 
 *   **Node.js** (for `npm` / **Vite**)
 *   **PHP** (standard for WordPress development)
-*   **Composer** (optional, for PHP dependency management if needed)
+*   **Composer** (mandatory, for PHP dependency management)
 
 ### Quick Start & Setup
 

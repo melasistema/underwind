@@ -1,0 +1,30 @@
+{
+    "name": "melasistema/underwind",
+    "description": "A modern, utility-first WordPress starter theme.",
+    "type": "wordpress-theme",
+    "license": "GPL-2.0-or-later",
+    "keywords": [
+        "WordPress",
+        "Theme",
+        "Tailwind",
+        "Starter Theme",
+        "Framework"
+    ],
+    "homepage": "https://github.com/melasistema/underwind",
+    "authors": [
+        {
+            "name": "Luca Visciola",
+            "homepage": "https://github.com/melasistema"
+        }
+    ],
+    "require": {
+        "php": ">=8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Underwind\\": "app/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
