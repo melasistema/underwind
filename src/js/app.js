@@ -1,6 +1,9 @@
 import '../css/app.css'
 import Alpine from 'alpinejs'
 
+// Import additional JS files
+// No additional JS files currently imported directly here, as customizer.js and navigation.js have been removed.
+
 window.Alpine = Alpine
 
 // Define global Alpine component

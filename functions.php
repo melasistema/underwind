@@ -62,8 +62,8 @@ function underwind_get_asset_url( $entry ) {
         return "http://localhost:5173/{$entry}";
     }
 
-    $manifest_path = get_template_directory() . '/dist/manifest.json';
-    $manifest_uri  = get_template_directory_uri() . '/dist';
+    $manifest_path = get_template_directory() . '/release/underwind/dist/manifest.json';
+    $manifest_uri  = get_template_directory_uri() . '/release/underwind/dist';
 
     if ( ! file_exists( $manifest_path ) ) return null;
 

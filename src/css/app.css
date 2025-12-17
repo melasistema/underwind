@@ -1,6 +1,10 @@
+@import 'woocommerce.css';
+/* Import WooCommerce styles */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 /* Optional: starter Tailwind utilities */
 body {

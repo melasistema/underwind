@@ -22,9 +22,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "package": "vite build && npx cpy-cli \"**\" \"!node_modules/**\" \"!src/**\" \"!release/**\" \"!.git/**\" \"!.idea/**\" \"!.DS_Store\" \"!.gitignore\" \"!package.json\" \"!package-lock.json\" \"!vite.config.js\" \"!postcss.config.js\" \"!tailwind.config.js\" \"!phpcs.xml.dist\" \"!README.md\" \"release/underwind\" --parents"
+    "build": "vite build && npx cpy-cli \"**\" \"!node_modules/**\" \"!src/**\" \"!.git/**\" \"!.idea/**\" \"!.DS_Store\" \"!.gitignore\" \"!package.json\" \"!package-lock.json\" \"!vite.config.js\" \"!postcss.config.js\" \"!tailwind.config.js\" \"!phpcs.xml.dist\" \"!README.md\" \"!dist/**\" \"!release/**\" \"release/underwind\" --parents",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "alpinejs": "^3.12.0",

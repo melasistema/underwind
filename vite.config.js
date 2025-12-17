@@ -5,9 +5,9 @@ export default defineConfig(({ command }) => {
     const isDev = command === 'serve'
 
     return {
-        base: isDev ? '/' : '/wp-content/themes/underwind/dist/',
+        base: isDev ? '/' : '/wp-content/themes/underwind/release/underwind/dist/',
         build: {
-            outDir: 'dist',
+            outDir: 'release/underwind/dist',
             emptyOutDir: true,
             manifest: true,
             rollupOptions: {
