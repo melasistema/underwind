@@ -2,76 +2,77 @@
 /**
  * The template for displaying comments
  *
- * This is the template that displays the area of the page that contains both the current comments
- * and the comment form.
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
  * @package Underwind
  */
 
-/*
- * If the current post is protected by a password and
- * the visitor has not yet entered the password we will
- * return early without loading the comments.
- */
 if ( post_password_required() ) {
-	return;
+    return;
 }
 ?>
 
-<div id="comments" class="comments-area">
+<div id="comments" class="comments-area mt-8">
 
-	<?php
-	// You can start editing here -- including this comment!
-	if ( have_comments() ) :
-		?>
-		<h2 class="comments-title">
-			<?php
-			$underwind_comment_count = get_comments_number();
-			if ( '1' === $underwind_comment_count ) {
-				printf(
-					/* translators: 1: title. */
-					esc_html__( 'One thought on &ldquo;%1$s&rdquo;', 'underwind' ),
-					'<span>' . wp_kses_post( get_the_title() ) . '</span>'
-				);
-			} else {
-				printf( 
-					/* translators: 1: comment count number, 2: title. */
-					esc_html( _nx( '%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', $underwind_comment_count, 'comments title', 'underwind' ) ),
-					number_format_i18n( $underwind_comment_count ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					'<span>' . wp_kses_post( get_the_title() ) . '</span>'
-				);
-			}
-			?>
-		</h2><!-- .comments-title -->
+    <?php if ( have_comments() ) : ?>
+        <h2 class="comments-title text-2xl font-semibold text-gray-800 mb-4">
+            <?php
+            $underwind_comment_count = get_comments_number();
+            if ( '1' === $underwind_comment_count ) {
+                printf(
+                        esc_html__( 'One thought on &ldquo;%1$s&rdquo;', 'underwind' ),
+                        '<span class="font-normal">' . wp_kses_post( get_the_title() ) . '</span>'
+                );
+            } else {
+                printf(
+                        esc_html( _nx(
+                                '%1$s thought on &ldquo;%2$s&rdquo;',
+                                '%1$s thoughts on &ldquo;%2$s&rdquo;',
+                                $underwind_comment_count,
+                                'comments title',
+                                'underwind'
+                        ) ),
+                        number_format_i18n( $underwind_comment_count ),
+                        '<span class="font-normal">' . wp_kses_post( get_the_title() ) . '</span>'
+                );
+            }
+            ?>
+        </h2>
 
-		<?php the_comments_navigation(); ?>
+        <?php the_comments_navigation(); ?>
 
-		<ol class="comment-list">
-			<?php
-			wp_list_comments(
-				array(
-					'style'      => 'ol',
-					'short_ping' => true,
-				)
-			);
-			?>
-		</ol><!-- .comment-list -->
+        <ol class="comment-list space-y-6">
+            <?php
+            wp_list_comments([
+                    'style'      => 'ol',
+                    'short_ping' => true,
+                    'avatar_size'=> 48,
+                    'reply_text' => '<span class="text-indigo-600 hover:underline">' . esc_html__( 'Reply', 'underwind' ) . '</span>',
+            ]);
+            ?>
+        </ol>
 
-		<?php
-		the_comments_navigation();
+        <?php the_comments_navigation(); ?>
 
-		// If comments are closed and there are comments, let's leave a little note, shall we?
-		if ( ! comments_open() ) :
-			?>
-			<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'underwind' ); ?></p>
-			<?php
-		endif;
+        <?php if ( ! comments_open() ) : ?>
+            <p class="no-comments text-gray-500 mt-4"><?php esc_html_e( 'Comments are closed.', 'underwind' ); ?></p>
+        <?php endif; ?>
 
-	endif; // Check for have_comments().
+    <?php endif; ?>
 
-	comment_form();
-	?>
+    <!-- Comment form -->
+    <div class="comment-form mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <?php
+        comment_form([
+                'title_reply_before' => '<h3 class="text-xl font-semibold mb-4">',
+                'title_reply_after'  => '</h3>',
+                'class_submit'       => 'bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition',
+                'comment_field'      => '<p class="comment-form-comment"><textarea id="comment" name="comment" rows="5" class="w-full p-3 border border-gray-300 rounded" placeholder="' . esc_attr__( 'Write your comment...', 'underwind' ) . '" required></textarea></p>',
+                'fields' => [
+                        'author' => '<p class="comment-form-author"><input id="author" name="author" type="text" class="w-full p-3 border border-gray-300 rounded mb-2" placeholder="' . esc_attr__( 'Name', 'underwind' ) . '" required></p>',
+                        'email'  => '<p class="comment-form-email"><input id="email" name="email" type="email" class="w-full p-3 border border-gray-300 rounded mb-2" placeholder="' . esc_attr__( 'Email', 'underwind' ) . '" required></p>',
+                        'url'    => '<p class="comment-form-url"><input id="url" name="url" type="url" class="w-full p-3 border border-gray-300 rounded mb-2" placeholder="' . esc_attr__( 'Website', 'underwind' ) . '"></p>',
+                ],
+        ]);
+        ?>
+    </div>
 
-</div><!-- #comments -->
+</div>
