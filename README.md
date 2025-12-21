@@ -4,9 +4,11 @@
 
 Underwind is a beautifully crafted starter theme for WordPress, built for the modern developer. It merges the rock-solid foundation of **\_underscores** with a high-velocity development environment powered by **Vite**, **Tailwind CSS**, and **Alpine.js**.
 
-It is designed to be a clean, unopinionated, and elegant canvas, ready to be transformed into your next bespoke WordPress project.
+It is designed to be a clean and elegant canvas, ready to be transformed into your next bespoke WordPress project.
 
 ---
+
+![Underwind](resources/images/underwind-feature-image.png)
 
 ## ✨ Features
 
