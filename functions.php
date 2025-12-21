@@ -61,85 +61,132 @@ function underwind_setup() {
 add_action( 'after_setup_theme', 'underwind_setup' );
 
 // --- Vite & Tailwind Enqueue ---
-// In your wp-config.php, add `define('VITE_ENV_DEVELOPMENT', true);` for development.
 define( 'UNDERWIND_VITE_DEV_SERVER_URL', 'http://localhost:5173' );
 define( 'UNDERWIND_VITE_ENTRY_POINT', 'src/js/app.js' );
 
 require_once get_template_directory() . '/inc/helper.php';
-require_once get_template_directory() . '/inc/underwind-navwalker.php';
+require_once get_template_directory() . '/inc/class-underwind-navwalker.php';
+
 
 /**
- * Enqueue scripts and styles for front-end.
+ * Enqueue scripts and styles for the front end.
  *
  * @return void
  */
 function underwind_enqueue_vite_assets() {
 
-	if ( defined( 'VITE_ENV_DEVELOPMENT' ) && VITE_ENV_DEVELOPMENT ) {
-		// Development mode: load assets from Vite dev server.
+	// Check if the 'hot' file exists to determine if we are in development mode.
+	$is_dev_mode = file_exists( get_template_directory() . '/dist/hot' );
 
-		// Enqueue the main JS entry point.
+	if ( $is_dev_mode ) {
+		// Development mode: load assets from the Vite development server.
+
+		// Enqueue the Vite client to enable Hot Module Replacement (HMR).
+		wp_enqueue_script(
+			'vite-client',
+			UNDERWIND_VITE_DEV_SERVER_URL . '/@vite/client',
+			array(),
+			null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+			true  // Load in footer.
+		);
+
+		// Enqueue the main JavaScript entry point.
 		wp_enqueue_script(
 			'underwind-app',
 			UNDERWIND_VITE_DEV_SERVER_URL . '/' . UNDERWIND_VITE_ENTRY_POINT,
 			array(),
 			null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
-			true
+			true  // Load in footer.
 		);
 
+		error_log( '[Vite Debug] Development mode active. Loading assets from: ' . UNDERWIND_VITE_DEV_SERVER_URL ); // phpcs:ignore
 	} else {
-		// Production mode: load assets from the manifest located in the theme's dist folder.
-		// The 'release/underwind' folder structure is for distribution, but the theme runs from 'wp-content/themes/underwind'.
-		// Therefore, we look for the 'dist' folder in the theme's root directory.
-		$manifest_path = get_template_directory() . '/dist/manifest.json';
+		// Production mode: load assets from the generated manifest.
+		$manifest_path = get_template_directory() . '/dist/.vite/manifest.json';
 		$manifest_uri  = get_template_directory_uri() . '/dist/';
+
+		error_log( '[Vite Debug] Production mode active.' ); // phpcs:ignore
+		error_log( '[Vite Debug] Manifest Path: ' . $manifest_path ); // phpcs:ignore
+		error_log( '[Vite Debug] Manifest URI: ' . $manifest_uri ); // phpcs:ignore
 
 		if ( ! file_exists( $manifest_path ) ) {
 			if ( is_admin() ) {
-				underwind_debug_log( 'Vite manifest file not found at: ' . $manifest_path );
+				error_log( 'Vite manifest file not found at: ' . $manifest_path ); // phpcs:ignore
 			}
 			return;
 		}
 
-		$manifest_content = file_get_contents( $manifest_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-		if ( ! $manifest_content ) {
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$manifest_content = file_get_contents( $manifest_path );
+		if ( empty( $manifest_content ) ) {
 			if ( is_admin() ) {
-				underwind_debug_log( 'Vite manifest file not found at: ' . $manifest_path );
+				error_log( 'Vite manifest file is empty at: ' . $manifest_path ); // phpcs:ignore
 			}
 			return;
 		}
 
 		$manifest = json_decode( $manifest_content, true );
+		error_log( '[Vite Debug] Manifest Content (decoded): ' . print_r( $manifest, true ) ); // phpcs:ignore
 
-		if ( isset( $manifest[ UNDERWIND_VITE_ENTRY_POINT ] ) ) {
-			$entry = $manifest[ UNDERWIND_VITE_ENTRY_POINT ];
+		$entry = isset( $manifest[ UNDERWIND_VITE_ENTRY_POINT ] )
+				? $manifest[ UNDERWIND_VITE_ENTRY_POINT ]
+				: null;
 
-			// Enqueue the main JS file.
-			if ( isset( $entry['file'] ) ) {
-				wp_enqueue_script(
-					'underwind-app',
-					$manifest_uri . $entry['file'],
-					array(), // Add dependencies here if any.
-					UNDERWIND_VERSION,
-					true
-				);
+		if ( ! $entry ) {
+			if ( is_admin() ) {
+				error_log( '[Vite Debug] Entry point "' . UNDERWIND_VITE_ENTRY_POINT . '" not found in manifest.' ); // phpcs:ignore
 			}
+			return;
+		}
 
-			// Enqueue the main CSS file if it exists.
-			if ( isset( $entry['css'] ) && is_array( $entry['css'] ) ) {
-				foreach ( $entry['css'] as $css_file ) {
-					wp_enqueue_style(
-						'underwind-style-' . pathinfo( $css_file, PATHINFO_FILENAME ),
-						$manifest_uri . $css_file,
-						array(), // Add dependencies here if any.
-						UNDERWIND_VERSION
+		// Enqueue the main JavaScript file.
+		if ( isset( $entry['file'] ) ) {
+			$js_url = $manifest_uri . $entry['file'];
+			wp_enqueue_script(
+				'underwind-app',
+				$js_url,
+				array(), // Add script dependencies here.
+				UNDERWIND_VERSION,
+				true // Load in footer.
+			);
+			error_log( '[Vite Debug] Enqueuing JS: ' . $js_url ); // phpcs:ignore
+		}
+
+		// Enqueue associated CSS files.
+		if ( isset( $entry['css'] ) && is_array( $entry['css'] ) ) {
+			foreach ( $entry['css'] as $css_file ) {
+				$css_url = $manifest_uri . $css_file;
+				wp_enqueue_style(
+					'underwind-style-' . pathinfo( $css_file, PATHINFO_FILENAME ),
+					$css_url,
+					array(), // Add style dependencies here.
+					UNDERWIND_VERSION
+				);
+				error_log( '[Vite Debug] Enqueuing CSS: ' . $css_url ); // phpcs:ignore
+			}
+		}
+
+		// Preload imported modules for the entry point for better performance.
+		if ( ! empty( $entry['imports'] ) ) {
+			foreach ( $entry['imports'] as $import_key ) {
+				if ( isset( $manifest[ $import_key ]['file'] ) ) {
+					$import_file = $manifest[ $import_key ]['file'];
+					$preload_url = $manifest_uri . $import_file;
+					add_action(
+						'wp_head',
+						function () use ( $preload_url ) {
+							echo '<link rel="modulepreload" href="' . esc_url( $preload_url ) . '">';
+						},
+						1
 					);
+					error_log( '[Vite Debug] Preloading module: ' . $preload_url ); // phpcs:ignore
 				}
 			}
 		}
 	}
 }
 add_action( 'wp_enqueue_scripts', 'underwind_enqueue_vite_assets' );
+
 
 /**
  * Add type="module" to scripts loaded from Vite.
@@ -150,10 +197,11 @@ add_action( 'wp_enqueue_scripts', 'underwind_enqueue_vite_assets' );
  * @return string The modified script tag.
  */
 function underwind_vite_script_loader_tag( $tag, $handle ) {
+	// The handles for the Vite client and the main app script.
 	$script_handles = array( 'vite-client', 'underwind-app' );
 
 	if ( in_array( $handle, $script_handles, true ) ) {
-		// Add type="module" (ES modules are deferred by default).
+		// Add type="module" to the script tag. ES modules are deferred by default.
 		if ( false === strpos( $tag, 'type="module"' ) ) {
 			$tag = str_replace( '<script ', '<script type="module" ', $tag );
 		}

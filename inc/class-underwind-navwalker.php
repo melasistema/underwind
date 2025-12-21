@@ -42,8 +42,11 @@ class Underwind_Navwalker extends Walker_Nav_Menu {
 	 * @param int      $id     Current item ID.
 	 */
 	public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
-		$indent       = ( $depth ) ? str_repeat( "\t", $depth ) : '';
-		$has_children = in_array( 'menu-item-has-children', $item->classes, true );
+		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
+
+		// Ensure the item classes property is an array to avoid fatal errors.
+		$item_classes = empty( $item->classes ) ? array() : (array) $item->classes;
+		$has_children = in_array( 'menu-item-has-children', $item_classes, true );
 
 		// Li element.
 		$li_attributes = '';
@@ -69,7 +72,7 @@ class Underwind_Navwalker extends Walker_Nav_Menu {
 		}
 
 		// Add active item styling.
-		if ( in_array( 'current-menu-item', $item->classes, true ) || in_array( 'current-menu-ancestor', $item->classes, true ) ) {
+		if ( in_array( 'current-menu-item', $item_classes, true ) || in_array( 'current-menu-ancestor', $item_classes, true ) ) {
 			$link_classes .= ' text-indigo-600'; // Active link color.
 		}
 
@@ -89,7 +92,7 @@ class Underwind_Navwalker extends Walker_Nav_Menu {
 		$attributes = '';
 		foreach ( $atts as $attr => $value ) {
 			if ( is_scalar( $value ) && '' !== $value && false !== $value ) {
-				$value      = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+				$value       = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
 				$attributes .= ' ' . $attr . '="' . $value . '"';
 			}
 		}
@@ -119,7 +122,7 @@ class Underwind_Navwalker extends Walker_Nav_Menu {
 	 * @param stdClass $args   An object of wp_nav_menu() arguments.
 	 */
 	public function end_lvl( &$output, $depth = 0, $args = null ) {
-		$indent = str_repeat( "\t", $depth );
+		$indent  = str_repeat( "\t", $depth );
 		$output .= "$indent</ul>\n";
 	}
 }
