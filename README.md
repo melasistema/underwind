@@ -48,12 +48,6 @@ It is designed to be a clean and elegant canvas, ready to be transformed into yo
     composer install
     ```
 
-3.  **Configure Development Mode:**
-    For local development, edit your `wp-config.php` file and add the following line. This enables the Vite dev server and HMR.
-    ```php
-    define('VITE_ENV_DEVELOPMENT', true);
-    ```
-
 ---
 
 ## 💻 Development Workflow
