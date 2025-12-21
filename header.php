@@ -75,6 +75,7 @@
 							'theme_location' => 'primary',
 							'menu_class'     => 'flex space-x-6',
 							'container'      => false,
+                            'walker'         => new Underwind_Navwalker(),
 						)
 					);
 					?>
@@ -94,6 +95,7 @@
 						'theme_location' => 'primary',
 						'menu_class'     => 'flex flex-col space-y-2',
 						'container'      => false,
+                        'walker'         => new Underwind_Navwalker(),
 					)
 				);
 				?>

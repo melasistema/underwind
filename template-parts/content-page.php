@@ -7,7 +7,7 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'mb-8 p-6 bg-white rounded-lg shadow' ); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'mb-8 p-6' ); ?>>
 
 	<!-- Page Header -->
 	<header class="entry-header mb-6">

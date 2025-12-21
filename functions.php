@@ -66,6 +66,7 @@ define( 'UNDERWIND_VITE_DEV_SERVER_URL', 'http://localhost:5173' );
 define( 'UNDERWIND_VITE_ENTRY_POINT', 'src/js/app.js' );
 
 require_once get_template_directory() . '/inc/helper.php';
+require_once get_template_directory() . '/inc/underwind-navwalker.php';
 
 /**
  * Enqueue scripts and styles for front-end.
@@ -162,8 +163,6 @@ function underwind_vite_script_loader_tag( $tag, $handle ) {
 }
 add_filter( 'script_loader_tag', 'underwind_vite_script_loader_tag', 10, 2 );
 
-
-
 /**
  * Template tags.
  */
@@ -232,4 +231,3 @@ function underwind_entry_footer() {
 		'</span>'
 	);
 }
-

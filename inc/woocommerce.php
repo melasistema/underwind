@@ -118,7 +118,7 @@ if ( ! function_exists( 'underwind_woocommerce_wrapper_before' ) ) {
 	 */
 	function underwind_woocommerce_wrapper_before() {
 		?>
-			<main id="primary" class="site-main">
+			<main id="primary" class="site-main container mx-auto px-4 py-8 flex-1">
 		<?php
 	}
 }
