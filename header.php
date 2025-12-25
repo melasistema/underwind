@@ -43,13 +43,13 @@
 					<?php if ( display_header_text() || is_customize_preview() ) : ?>
 						<div class="site-branding-text-wrap">
 							<?php if ( is_front_page() && is_home() ) : ?>
-								<h1 class="text-2xl font-bold site-title-text">
+								<h1 class="text-2xl font-bold site-title">
 									<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
 										<?php bloginfo( 'name' ); ?>
 									</a>
 								</h1>
 							<?php else : ?>
-								<p class="text-xl font-semibold site-title-text">
+								<p class="text-xl font-semibold site-title">
 									<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
 										<?php bloginfo( 'name' ); ?>
 									</a>
