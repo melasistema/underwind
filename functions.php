@@ -97,27 +97,28 @@ function underwind_block_patterns_init() {
 }
 add_action( 'init', 'underwind_block_patterns_init' );
 
-
+/**
+ * Output custom header text color CSS.
+ */
 function underwind_header_text_color_css() {
-    $color = get_header_textcolor();
+	$color = get_header_textcolor();
 
-    // Bail if default color or hidden
-    if (
-        empty( $color ) ||
-        'blank' === $color ||
-        get_theme_support( 'custom-header', 'default-text-color' ) === $color
-    ) {
-        return;
-    }
+	// Bail if default color or hidden.
+	if (
+		empty( $color ) ||
+		'blank' === $color ||
+		get_theme_support( 'custom-header', 'default-text-color' ) === $color
+	) {
+		return;
+	}
 
-    $css = "
+	$css = "
         .site-title a,
         .site-description {
             color: #{$color};
         }
     ";
 
-    wp_add_inline_style( 'underwind-app-style', $css );
+	wp_add_inline_style( 'underwind-app-style', $css );
 }
 add_action( 'wp_enqueue_scripts', 'underwind_header_text_color_css' );
-

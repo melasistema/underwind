@@ -1,9 +1,7 @@
-@import "app.css";
+@import 'app.css';
 
 body.editor-styles-wrapper {
     padding: 1.5rem;
     @apply prose prose-lg;
     max-width: none;
 }
-
-
