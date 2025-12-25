@@ -15,6 +15,12 @@ function underwind_customize_register( $wp_customize ) {
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
 
+	// Check if the 'display_header_text' setting exists before attempting to modify its transport.
+	$display_header_text_setting = $wp_customize->get_setting( 'display_header_text' );
+	if ( null !== $display_header_text_setting ) {
+		$display_header_text_setting->transport = 'postMessage';
+	}
+
 	if ( isset( $wp_customize->selective_refresh ) ) {
 		$wp_customize->selective_refresh->add_partial(
 			'blogname',
@@ -56,6 +62,6 @@ function underwind_customize_partial_blogdescription() {
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function underwind_customize_preview_js() {
-	wp_enqueue_script( 'underwind-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), UNDERWIND_VERSION, true );
+	wp_enqueue_script( 'underwind-customizer', get_template_directory_uri() . '/src/js/customizer.js', array( 'customize-preview' ), UNDERWIND_VERSION, true );
 }
 add_action( 'customize_preview_init', 'underwind_customize_preview_js' );

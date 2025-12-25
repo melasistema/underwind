@@ -40,21 +40,29 @@
 				<div class="site-branding flex items-center space-x-4">
 					<?php the_custom_logo(); ?>
 
-					<div>
-						<?php if ( is_front_page() && is_home() ) : ?>
-							<h1 class="text-2xl font-bold">
-								<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
-									<?php bloginfo( 'name' ); ?>
-								</a>
-							</h1>
-						<?php else : ?>
-							<p class="text-xl font-semibold">
-								<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
-									<?php bloginfo( 'name' ); ?>
-								</a>
-							</p>
-						<?php endif; ?>
-					</div>
+					<?php if ( display_header_text() || is_customize_preview() ) : ?>
+						<div class="site-branding-text-wrap">
+							<?php if ( is_front_page() && is_home() ) : ?>
+								<h1 class="text-2xl font-bold site-title-text">
+									<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+										<?php bloginfo( 'name' ); ?>
+									</a>
+								</h1>
+							<?php else : ?>
+								<p class="text-xl font-semibold site-title-text">
+									<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+										<?php bloginfo( 'name' ); ?>
+									</a>
+								</p>
+							<?php endif; ?>
+							<?php
+							$underwind_description = get_bloginfo( 'description', 'display' );
+							if ( $underwind_description || is_customize_preview() ) :
+								?>
+								<p class="site-description text-sm"><?php echo $underwind_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+							<?php endif; ?>
+						</div>
+					<?php endif; ?>
 				</div>
 
 				<!-- Mobile toggle -->
