@@ -1,8 +1,9 @@
 @import "app.css";
 
-body {
+body.editor-styles-wrapper {
     padding: 1.5rem;
-    @apply prose prose-lg max-w-none; /* Apply Tailwind's typography styles */
+    @apply prose prose-lg;
+    max-width: none;
 }
 
 
