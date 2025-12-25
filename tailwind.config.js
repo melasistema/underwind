@@ -1,4 +1,5 @@
-import defaultTheme from 'tailwindcss/defaultTheme'
+import defaultTheme from 'tailwindcss/defaultTheme.js'
+import typography from '@tailwindcss/typography'
 
 export default {
     content: [
@@ -14,5 +15,7 @@ export default {
             },
         },
     },
-    plugins: [],
+    plugins: [
+        typography,
+    ],
 }

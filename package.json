@@ -21,15 +21,18 @@
     "url": "https://github.com/melasistema/underwind/issues"
   },
   "scripts": {
-    "dev": "mkdir -p dist && touch dist/hot && vite",
-    "build": "rm -f dist/hot && vite build && npx cpy-cli \"**\" \"!node_modules/**\" \"!src/**\" \"!.git/**\" \"!.idea/**\" \"!.DS_Store\" \"!.gitignore\" \"!package.json\" \"!package-lock.json\" \"!vite.config.js\" \"!postcss.config.js\" \"!tailwind.config.js\" \"!phpcs.xml.dist\" \"!README.md\" \"!release/**\" \"release/underwind\" --parents",
+    "dev": "tailwindcss -i ./src/css/editor.css -o ./dist/editor.css && npm run editor:css:watch & mkdir -p dist && touch dist/hot && vite",
+    "build": "npm run theme:json && rm -f dist/hot && vite build && npx cpy-cli \"**\" \"!node_modules/**\" \"!src/**\" \"!.git/**\" \"!.idea/**\" \"!.DS_Store\" \"!.gitignore\" \"!package.json\" \"!package-lock.json\" \"!vite.config.js\" \"!postcss.config.js\" \"!tailwind.config.js\" \"!phpcs.xml.dist\" \"!README.md\" \"!release/**\" \"release/underwind\" --parents",
     "preview": "vite preview",
+    "theme:json": "node generate-theme-json.js",
+    "editor:css:watch": "tailwindcss -i ./src/css/editor.css -o ./dist/editor.css --watch",
     "lint:js": "eslint \"{src,inc}/**/*.{js,jsx,ts,tsx}\"",
     "format:js": "prettier --write \"{src,inc}/**/*.{js,jsx,ts,tsx,css,json}\"",
     "lint:php": "vendor/bin/phpcs --standard=phpcs.xml.dist --ignore=node_modules,vendor,dist,release .",
     "format:php": "vendor/bin/phpcbf --standard=phpcs.xml.dist --ignore=node_modules,vendor,dist,release ."
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
     "@typescript-eslint/eslint-plugin": "^8.50.0",
     "@typescript-eslint/parser": "^8.50.0",
     "alpinejs": "^3.12.0",

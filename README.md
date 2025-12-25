@@ -12,6 +12,7 @@ It is designed to be a clean and elegant canvas, ready to be transformed into yo
 
 ## ✨ Features
 
+*   **✍️ First-Class Gutenberg & Block Editor Support:** Seamlessly integrate Tailwind CSS within the WordPress Block Editor with editor styles, Tailwind-ready `theme.json` defaults, and a robust workflow for custom block patterns.
 *   **⚡️ Modern Dev Environment:** A seamless development experience with near-instant updates powered by **Vite**, including Hot Module Replacement (HMR).
 *   **🎨 Utility-First Styling:** Direct and powerful styling workflow using **Tailwind CSS**, enabling rapid UI development without leaving your HTML.
 *   **🧩 Effortless Interactivity:** **Alpine.js** is integrated and ready for creating rich, reactive, client-side components with minimal overhead.
@@ -58,7 +59,7 @@ Underwind comes with a complete set of CLI commands to streamline your workflow.
 
 | Command         | Description                                                                                                        |
 | :-------------- | :----------------------------------------------------------------------------------------------------------------- |
-| `npm run dev`   | Starts the Vite development server with Hot Module Replacement (HMR). This is the primary command for development.   |
+| `npm run dev`   | Starts the Vite development server with Hot Module Replacement (HMR) and compiles editor styles locally for the Gutenberg editor. This is the primary command for development.   |
 | `npm run build` | Compiles and bundles all assets for production and creates a distributable theme folder in `release/underwind`.      |
 | `npm run preview` | Runs a local preview of your production-built assets.                                                              |
 

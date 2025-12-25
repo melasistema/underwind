@@ -57,15 +57,73 @@ function underwind_setup() {
 	);
 
 	add_theme_support( 'customize-selective-refresh-widgets' );
+
+	// Add support for Block Styles.
+	add_theme_support( 'wp-block-styles' );
+
+	// Add support for wide alignment.
+	add_theme_support( 'align-wide' );
+
+	// Add support for editor styles.
+	add_theme_support( 'editor-styles' );
 }
 add_action( 'after_setup_theme', 'underwind_setup' );
 
 // --- Vite & Tailwind Enqueue ---
 define( 'UNDERWIND_VITE_DEV_SERVER_URL', 'http://localhost:5173' );
 define( 'UNDERWIND_VITE_ENTRY_POINT', 'src/js/app.js' );
+define( 'UNDERWIND_VITE_APP_ENTRY_POINT_CSS', 'src/css/app.css' );
 
 require_once get_template_directory() . '/inc/helper.php';
 require_once get_template_directory() . '/inc/class-underwind-navwalker.php';
+
+
+define( 'UNDERWIND_VITE_EDITOR_ENTRY_POINT', 'src/css/editor.css' );
+
+/**
+ * Enqueue scripts and styles for the editor.
+ *
+ * @return void
+ */
+function underwind_enqueue_editor_assets() {
+	// Check if the 'hot' file exists to determine if we are in development mode.
+	$is_dev_mode = file_exists( get_template_directory() . '/dist/hot' );
+
+	if ( $is_dev_mode ) {
+		// Development mode: load assets from the local generated file.
+		add_editor_style( 'dist/editor.css' );
+	} else {
+		// Production mode: load assets from the generated manifest.
+		$manifest_path = get_template_directory() . '/dist/.vite/manifest.json';
+
+		if ( ! file_exists( $manifest_path ) ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$manifest_content = file_get_contents( $manifest_path );
+		if ( empty( $manifest_content ) ) {
+			return;
+		}
+
+		$manifest = json_decode( $manifest_content, true );
+
+		$editor_entry = isset( $manifest[ UNDERWIND_VITE_EDITOR_ENTRY_POINT ] )
+				? $manifest[ UNDERWIND_VITE_EDITOR_ENTRY_POINT ]
+				: null;
+		$app_entry    = isset( $manifest[ UNDERWIND_VITE_APP_ENTRY_POINT_CSS ] )
+				? $manifest[ UNDERWIND_VITE_APP_ENTRY_POINT_CSS ]
+				: null;
+
+		if ( $editor_entry && isset( $editor_entry['file'] ) ) {
+			add_editor_style( 'dist/' . $editor_entry['file'] );
+		}
+		if ( $app_entry && isset( $app_entry['file'] ) ) {
+			add_editor_style( 'dist/' . $app_entry['file'] );
+		}
+	}
+}
+add_action( 'after_setup_theme', 'underwind_enqueue_editor_assets' );
 
 
 /**
@@ -97,6 +155,14 @@ function underwind_enqueue_vite_assets() {
 			array(),
 			null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 			true  // Load in footer.
+		);
+
+		// Enqueue the main CSS entry point for app.css
+		wp_enqueue_style(
+			'underwind-app-style',
+			UNDERWIND_VITE_DEV_SERVER_URL . '/' . UNDERWIND_VITE_APP_ENTRY_POINT_CSS,
+			array(),
+			null
 		);
 
 		error_log( '[Vite Debug] Development mode active. Loading assets from: ' . UNDERWIND_VITE_DEV_SERVER_URL ); // phpcs:ignore
@@ -210,6 +276,22 @@ function underwind_vite_script_loader_tag( $tag, $handle ) {
 	return $tag;
 }
 add_filter( 'script_loader_tag', 'underwind_vite_script_loader_tag', 10, 2 );
+
+/**
+ * Block patterns.
+ */
+function underwind_block_patterns_init() {
+	require_once get_template_directory() . '/inc/block-pattern-categories.php';
+
+	$block_patterns = array(
+		'hero',
+	);
+
+	foreach ( $block_patterns as $block_pattern ) {
+		require_once get_template_directory() . '/inc/block-patterns/' . $block_pattern . '.php';
+	}
+}
+add_action( 'init', 'underwind_block_patterns_init' );
 
 /**
  * Template tags.

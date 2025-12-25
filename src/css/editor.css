@@ -1,0 +1,8 @@
+@import "app.css";
+
+body {
+    padding: 1.5rem;
+    @apply prose; /* Apply Tailwind's typography styles */
+}
+
+

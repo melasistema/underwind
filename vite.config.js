@@ -13,6 +13,8 @@ export default defineConfig(({ command }) => {
             rollupOptions: {
                 input: {
                     app: path.resolve(__dirname, 'src/js/app.js'),
+                    'src/css/editor.css': path.resolve(__dirname, 'src/css/editor.css'),
+                    'src/css/app.css': path.resolve(__dirname, 'src/css/app.css'),
                 },
                 output: {
                     assetFileNames: 'assets/[name]-[hash][extname]',
