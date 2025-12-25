@@ -73,7 +73,7 @@
 					wp_nav_menu(
 						array(
 							'theme_location' => 'primary',
-							'menu_class'     => 'flex space-x-6',
+							'menu_class'     => 'flex space-x-6 list-none',
 							'container'      => false,
 							'walker'         => new Underwind_Navwalker(),
 						)
@@ -93,7 +93,7 @@
 				wp_nav_menu(
 					array(
 						'theme_location' => 'primary',
-						'menu_class'     => 'flex flex-col space-y-2',
+						'menu_class'     => 'flex flex-col space-y-2 list-none',
 						'container'      => false,
 						'walker'         => new Underwind_Navwalker(),
 					)

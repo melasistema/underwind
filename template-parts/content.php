@@ -34,7 +34,7 @@
 	<?php underwind_post_thumbnail(); ?>
 
 	<!-- Post Content -->
-	<div class="entry-content prose text-gray-700 leading-relaxed">
+	<div class="entry-content prose prose-lg max-w-none">
 		<?php
 		the_content(
 			sprintf(

@@ -2,7 +2,7 @@
 
 body {
     padding: 1.5rem;
-    @apply prose; /* Apply Tailwind's typography styles */
+    @apply prose prose-lg max-w-none; /* Apply Tailwind's typography styles */
 }
 
 

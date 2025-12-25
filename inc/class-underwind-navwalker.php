@@ -19,12 +19,12 @@ class Underwind_Navwalker extends Walker_Nav_Menu {
 	 */
 	public function start_lvl( &$output, $depth = 0, $args = null ) {
 		$indent    = str_repeat( "\t", $depth );
-		$classes   = 'absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-50';
+		$classes   = 'absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-50 list-none';
 		$is_mobile = str_contains( $args->menu_class, 'flex-col' );
 
 		// For mobile menu, sub-menus are not absolute, they are inline.
 		if ( $is_mobile ) {
-			$classes = 'pl-4 py-2 space-y-2';
+			$classes = 'pl-4 py-2 space-y-2 list-none';
 		}
 
 		$alpine_directives = 'x-show="open" @click.away="open = false" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-95"';
