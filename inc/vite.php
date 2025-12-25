@@ -90,12 +90,12 @@ function underwind_enqueue_vite_assets() {
 			true  // Load in footer.
 		);
 
-		// Enqueue the main CSS entry point for app.css
+		// Enqueue the main CSS entry point for app.css!
 		wp_enqueue_style(
 			'underwind-app-style',
 			UNDERWIND_VITE_DEV_SERVER_URL . '/' . UNDERWIND_VITE_APP_ENTRY_POINT_CSS,
 			array(),
-			null
+			null // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 		);
 
 		error_log( '[Vite Debug] Development mode active. Loading assets from: ' . UNDERWIND_VITE_DEV_SERVER_URL ); // phpcs:ignore

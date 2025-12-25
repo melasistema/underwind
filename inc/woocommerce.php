@@ -43,7 +43,7 @@ add_action( 'after_setup_theme', 'underwind_woocommerce_setup' );
  * @return void
  */
 function underwind_woocommerce_scripts() {
-	wp_enqueue_style( 'underwind-woocommerce-style', get_template_directory_uri() . '/woocommerce.css', array(), _S_VERSION );
+	wp_enqueue_style( 'underwind-woocommerce-style', get_template_directory_uri() . '/woocommerce.css', array(), UNDERWIND_VERSION );
 
 	$font_path   = WC()->plugin_url() . '/assets/fonts/';
 	$inline_font = '@font-face {
