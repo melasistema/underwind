@@ -76,6 +76,8 @@ require_once get_template_directory() . '/inc/helper.php';
 require_once get_template_directory() . '/inc/class-underwind-navwalker.php';
 require_once get_template_directory() . '/inc/template-functions.php';
 require_once get_template_directory() . '/inc/template-tags.php';
+require_once get_template_directory() . '/inc/customizer.php';
+require_once get_template_directory() . '/inc/custom-header.php';
 require_once get_template_directory() . '/inc/vite.php';
 
 /**

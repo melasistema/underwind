@@ -103,4 +103,6 @@
 		</div>
 	</header>
 
-	<main id="primary" class="flex-1">
+<?php the_header_image_tag(); ?>
+
+<main id="primary" class="flex-1">
