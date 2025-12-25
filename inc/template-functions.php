@@ -37,6 +37,19 @@ function underwind_pingback_header() {
 add_action( 'wp_head', 'underwind_pingback_header' );
 
 /**
+ * Add a custom class to the header image tag.
+ *
+ * @param array $attr Attributes for the header image tag.
+ * @return array
+ */
+function underwind_add_header_image_class( $attr ) {
+    $tailwind_classes = 'w-full h-full object-cover'; // Tailwind classes for cover effect
+    $attr['class'] = isset( $attr['class'] ) ? $attr['class'] . ' ' . $tailwind_classes : $tailwind_classes;
+    return $attr;
+}
+add_filter( 'get_header_image_tag_attributes', 'underwind_add_header_image_class' );
+
+/**
  * Fix mixed content issues on SSL.
  */
 function underwind_ssl_output_buffer_start() {
